@@ -9,11 +9,36 @@ export class PromiseComponent implements OnInit {
   constructor() {}
 
   dellAvailable() {
-    return true;
-  }
-  hpAvailable() {
     return false;
   }
+  hpAvailable() {
+    return true;
+  }
+
+  promiseVal: unknown;
+
+  dell = {
+    brand: 'Dell',
+    price: '99900',
+    color: 'black',
+    Ram: '16 GB',
+    Hardisk: '1 TB',
+    success: 'Dell laptop is purchased',
+  };
+
+  hp = {
+    brand: 'Dell',
+    price: '99900',
+    color: 'black',
+    Ram: '16 GB',
+    Hardisk: '1 TB',
+    success: 'Hp laptop is purchased',
+  };
+
+  notAvail = {
+    brand: 'Not found',
+    status: 'Laptop not availabel',
+  };
 
   ngOnInit(): void {
     // indefinite
@@ -21,20 +46,31 @@ export class PromiseComponent implements OnInit {
       // resolve('promise resolved');
       // reject('promise rejected');
       if (this.dellAvailable()) {
-        resolve('Dell is purchased');
+        return setTimeout(() => {
+          // resolve('Dell is purchased');
+          resolve(this.dell);
+        }, 3000);
       } else if (this.hpAvailable()) {
-        resolve('hp is purchased');
+        return setTimeout(() => {
+          // resolve('hp is purchased');
+          resolve(this.hp);
+        }, 3000);
       } else {
-        reject('Laptop not available at the store');
+        return setTimeout(() => {
+          // reject('Laptop not available at the store');
+          reject(this.notAvail);
+        }, 3000);
       }
     });
 
     buyLaptop
       .then((res) => {
         console.log('then code => ', res);
+        this.promiseVal = JSON.stringify(res);
       })
       .catch((res) => {
         console.log('cath code => ', res);
+        this.promiseVal = res;
       });
   }
 
